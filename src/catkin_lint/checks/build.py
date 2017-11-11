@@ -207,6 +207,18 @@ def depends(linter):
         for pkg in info.build_dep - (info.find_packages - info.test_packages):
             if info.env.is_catkin_pkg(pkg):
                 info.report(ERROR if info.executables or info.libraries else WARNING, "UNCONFIGURED_BUILD_DEPEND", pkg=pkg)
+        for pkg in info.catkin_components:
+            if pkg in info.include_packages:
+                # print("found matching package: {}".format(pkg))
+                pass
+            else:
+                print("Did not find match for package {}. You could probably get rid of this dependency.".format(pkg))
+        for pkg in info.include_packages:
+            if pkg in info.catkin_components:
+                # print("found reverse matching package: {}".format(pkg))
+                pass
+            else:
+                print("Did not find match for package {}. You should include this in find_package".format(pkg))
 
     linter.require(manifest_depends)
     linter.add_init_hook(on_init)

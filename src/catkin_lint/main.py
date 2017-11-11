@@ -182,6 +182,7 @@ def run_linter(args):
 
 
 def main():  # pragma: no cover
+    print("Welcome to the world of tomorrow!")
     try:
         parser = prepare_arguments(argparse.ArgumentParser())
         args = parser.parse_args()

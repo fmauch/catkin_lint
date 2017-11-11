@@ -33,6 +33,7 @@ from fnmatch import fnmatch
 from copy import copy
 from .cmake import ParserContext, argparse as cmake_argparse, CMakeSyntaxError
 from .diagnostics import msg
+from .roscpp import find_cpp_include_packages
 
 ERROR = 0
 WARNING = 1
@@ -68,6 +69,7 @@ class LintInfo(object):
         self.ignored_messages = 0
         self.commands = set([])
         self.find_packages = set([])
+        self.include_packages = set([])
         self.targets = set([])
         self.executables = set([])
         self.libraries = set([])
@@ -440,6 +442,7 @@ class CMakeLinter(object):
         info.ignore_messages = self.ignore_messages
         info.path = path
         info.manifest = manifest
+        info.include_packages = find_cpp_include_packages(path)
         info.conditionals = []
         info.var = {
             "CMAKE_CURRENT_SOURCE_DIR": "/pkg-source",
